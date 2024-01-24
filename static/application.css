@@ -1,0 +1,143 @@
+/* application.css */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("../static/images/applicationimage.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+    display: flex;
+}
+
+.sidebar {
+    flex: 0 0 20%;
+    background: #2c3e50; 
+    padding: 30px 0;
+    color: white;
+}
+
+.sidebar h1 {
+    color: #fff; 
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #ecf0f1; 
+    display: block;
+    padding: 15px;
+    border-bottom: 0.4px solid white; 
+    border-top: 0.4px solid white;
+    transition: background 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+.sidebar a:hover {
+    background: #2ecc71; /* Match the background color from update.css */
+    color: #ffffff;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.topbar {
+    background-color: #34495e;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.contentbar {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+}
+
+.contentbar a:hover {
+    color: #ff0000;
+}
+
+
+.msg {
+    margin-bottom: 20px;
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.success-message {
+    text-align: center; 
+    margin-bottom: 20px; 
+}
+
+.success-message p {
+    color: #009933; 
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.success-message button {
+    margin-top: 10px; 
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+form select,
+form textarea,
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form button {
+    padding: 20px 70px; 
+    background-color: #009933;
+    color: #FFFFFF;
+    font-style: oblique;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 18px; 
+    border: none; 
+}
+
+form button:hover {
+    background-color: #ff0000;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

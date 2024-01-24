@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Arrange containers in a column */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('{{ url_for('static', filename='images/background.jpg') }}');
+}
+
+.container {
+    width: 100vw; /* Take full width of the viewport */
+    margin: 20px;
+}
+
+.description-container,
+.ads-container,
+.contact-container,
+.disclaimer-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 20px; /* Add space between containers */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h1 { 
+    text-align: center;
+}
+
+h2 { 
+    color: #DC381F;
+    font-size: 30px;        
+}
+
+.description-content {
+    width: 80vw;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.apply-button {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.apply-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+}
+.disclaimer-container h2 {
+    color: #DC381F;
+    text-align: center;
+}
+
+.disclaimer-content {
+    text-align: center;
+}
+ 
+.ads-container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    color: #fff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ads-container h2 {
+    color: #DC381F; /* Heading color */
+}
+
+.ad-images {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.ad-image p {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+    position: inline-block;
+}
+
+.ad-image img {
+    width: 80%;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ad-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff; /* Caption text color */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    color: #333; /* Dark text for better readability */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-container h2 {
+    color: #DC381F; /* Heading color */
+}
+
+.contact-container p {
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-link {
+    text-decoration: none;
+    color: #007BFF; /* Link color */
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.social-link img {
+    width: 50px; /* Adjust the icon size */
+    height: 50px;
+    margin-right: 10px;
+}
+
+.social-link:hover {
+    color: #0909FF; /* Change link color on hover */
+}

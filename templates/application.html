@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GDiSEP DIGITAL PROGRAM Application</title>
+    <link rel="stylesheet" href="../static/application.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>GDiSEP Application</h1>
+            <ul>
+                <li><a href="{{url_for('index')}}">Index</a></li>
+                <li><a href="{{url_for('display')}}">Display</a></li>
+                <li><a href="{{url_for('update')}}">Update</a></li>
+                <li><a href="{{url_for('application_details')}}">Your Application Details</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="topbar">
+                <h2>GDiSEP DIGITAL PROGRAM Application Form</h2>
+            </div>
+            <div class="contentbar">
+                <div class="msg">{{ msg }}</div>
+
+                {% if msg == 'Application submitted successfully!' %}
+                    <div class="success-message">
+                        <form method="GET" action="{{url_for('application_details')}}">
+                            <button type="submit">View Application Details</button>
+                        </form>
+                    </div>
+                {% endif %}
+
+                {% if existing_application %}
+                    <p>You have already applied. Click <a href="{{ url_for('application_details') }}">HERE</a> to view your application.</p>
+                {% else %}
+                    <!-- Form for new application -->
+                    <form method="POST" action="{{ url_for('application') }}">
+                        <label for="preferred_skill">Preferred Digital Skill:</label>
+                        <select id="preferred_skill" name="preferred_skill" required>
+                            <option value="" disabled selected>Select your preferred skill</option>
+                            <option value="DEVOPS ENGINEER">DEVOPS ENGINEER</option>
+                            <option value="CLOUD ENGINEER">CLOUD ENGINEER</option>
+                            <option value="FULL-STACK DEVELOPER">FULL-STACK DEVELOPER</option>
+                            <option value="FRONT-END DEVELOPER">FRONT-END DEVELOPER</option>
+                            <option value="BACK-END DEVELOPER">BACK-END DEVELOPER</option>
+                            <option value="UI/UX DESIGN">UI/UX DESIGN</option>
+                            <option value="VIDEO EDITING">VIDEO EDITING</option>
+                        </select><br>
+
+                        <label for="description">What influenced your decision for this Skill Choice:</label>
+                        <textarea id="description" name="description" rows="4" cols="50" placeholder="In not more than 50 Words why do you chose this skill" required></textarea><br>
+
+                        <label for="education_level">Highest Educational Level:</label>
+                        <input type="text" id="education_level" name="education_level" placeholder="Enter your highest educational level" required><br>
+
+                        <label for="institution">Name of Highest Institution Attended:</label>
+                        <input type="text" id="institution" name="institution" placeholder="Enter the name of your highest institution attended" required><br>
+
+                        <label for="course">Course of Study:</label>
+                        <input type="text" id="course" name="course" placeholder="Enter your course of study" required><br>
+
+                        <label for="certificate">Certificate Obtained:</label>
+                        <input type="text" id="certificate" name="certificate" placeholder="Enter the certificate obtained" required><br>
+
+                        <label for="grade">Grade Classification:</label>
+                        <select id="grade" name="grade" required>
+                            <option value="" disabled selected>Select your Degree Classification</option>
+                            <option value="FIRST CLASS">FIRST CLASS HONOURS</option>
+                            <option value="SECOND CLASS UPPER">SECOND CLASS HONOURS, UPPER-DIVISION</option>
+                            <option value="SECOND CLASS LOWER">SECOND CLASS HONOURS, LOWER-DIVISION</option>
+                            <option value="THIRD CLASS HONOURS">THIRD CLASS HONOURS</option>
+                            <option value="PASS">PASS</option>
+                            <option value="UNDERGRADUATE">YET TO GRADUATE</option>
+                        </select><br>
+
+                        <label for="computer_skills_rating">Computer Skills Rating (1-10):</label>
+                        <input type="number" id="computer_skills_rating" name="computer_skills_rating" min="1" max="10" placeholder="Enter your computer skills rating" required><br>
+
+                        <label for="experience_years">IT Years of Experience:</label>
+                        <select id="experience_years" name="experience_years" required>
+                            <option value="" disabled selected>Select your IT experience range</option>
+                            <option value="0-1 year">0-1 year</option>
+                            <option value="2-5 years">2-5 years</option>
+                            <option value="5 and above">5 and above</option>
+                        </select><br>
+
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="18" max="35" placeholder="Enter your age" required><br>
+
+                        <button type="submit">Submit</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

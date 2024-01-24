@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Application Details</title>
+    <link rel="stylesheet" href="../static/app_details.css">
+</head>
+
+<body bgcolor="#e6ffee">
+
+    <div class="one">
+
+        <div class="two">
+            <h1>APPLICATION DETAILS</h1>
+            <ul>
+                <li><a href="{{url_for('index')}}">Index</a></li>
+                <li><a href="{{url_for('display')}}">Display</a></li>
+                <li><a href="{{url_for('update')}}">Update</a></li>
+                <li class="active"><a href="{{url_for('application_details')}}">Your Application Details</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
+            </ul>
+        </div>
+
+        <div class="content" align="center">
+
+            <div class="topbar">
+                <h2>Welcome!! Application Review page!!</h2>
+            </div>
+
+            <div class="contentbar">
+                <h1>Your Application Details</h1>
+
+                {% block content %}
+                {% if application %}
+                <div class="border">
+                    <table class="worddark">
+                        <tr>
+                            <td>Preferred Digital Skill:</td>
+                            <td>{{ application['preferred_skill'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Description:</td>
+                            <td>{{ application['description'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Highest Educational Level:</td>
+                            <td>{{ application['education_level'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Institution:</td>
+                            <td>{{ application['institution'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Course:</td>
+                            <td>{{ application['course'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Certificate Obtained:</td>
+                            <td>{{ application['certificate'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Grade:</td>
+                            <td>{{ application['grade'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Computer Skills Rating:</td>
+                            <td>{{ application['computer_skills_rating'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>IT Years of Experience:</td>
+                            <td>{{ application['experience_years'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Age:</td>
+                            <td>{{ application['age'] }}</td>
+                        </tr>
+                    </table>
+                </div>
+                {% else %}
+                <p>No application details found.</p>
+                {% endif %}
+                {% endblock %}
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

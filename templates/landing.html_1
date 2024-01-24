@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godfrey's Digital Skill Empowerment Programme (GDiSEP)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+
+<!-- Website Description Section -->
+<div class="container">
+    <div class="description-container">
+        <header>
+            <h1>Welcome to Godfrey's Digital Skill Empowerment Programme (GDiSEP)</h1>
+        </header>
+        <div class="description-content">
+            <p>
+                An initiative that will provide excellent digital training and upskilling to a group of eligible candidates with digital skills to build their capabilities and broaden their digital scope. The Digital Skills Empowerment Programme (GDiSEP) is designed to aid the identification and attraction of unique digitally savvy candidates, train, develop, and position them to be able to participate in supporting the digital transformation journey of the Godfrey foundation and also help bridge the gap of digital talent scarcity in the employment market. It is an intensive program and a unique opportunity for young people who are resourceful and passionate about developing the required skills to build a fast-tracked career.
+            </p>
+            <p>
+                GDiSEP is an intensive program and a unique opportunity for young people who are resourceful and passionate to develop the required skills to build a fast-tracked career. Successful candidates will have the opportunity to prepare for and complete professional certifications.
+            </p>
+        </div>
+        <a href="{{ url_for('register') }}" class="apply-button">APPLY NOW</a>
+    </div>
+</div>
+
+<!-- Ads Section -->
+<div class="container">
+    <div class="ads-container">
+        <h2>Featured Ads</h2>
+        <div class="ad-images">
+            <!-- Ads images will be dynamically updated here -->
+            <div class="ad-image">
+                <img src="{{url_for('static', filename='images/image1.jpeg')}}" alt="Ad Image 1">
+                <p class="ad-caption">Discover the latest trends</p>
+            </div>
+            <div class="ad-image">
+                <img src="{{url_for('static', filename='images/image2.jpg')}}" alt="Ad Image 2">
+                <p class="ad-caption">Upgrade your skills today</p>
+            </div>
+            <div class="ad-image">
+                <img src="{{url_for('static', filename='images/image3.png')}}" alt="Ad Image 3">
+                <p class="ad-caption">Explore new opportunities</p>
+            </div>
+            <div class="ad-image">
+                <img src="{{url_for('static', filename='images/image4.jpeg')}}" alt="Ad Image 4">
+                <p class="ad-caption">Unlock your potential</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Disclaimer Section -->
+<div class="container">
+    <div class="disclaimer-container">
+        <h2>Disclaimer</h2>
+        <div class="disclaimer-content">
+            <p>This website is soley for learning purposes only and does not emanate from Stanbic Bank PLC or Standard Bank Group</p>
+            <p>Also Godfrey's Foundation does not exist and NO recruitment is been done, Like pointed earlier, THIS IS FOR LEARNING PURPOSE</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Us Section -->
+<div class="container">
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>Connect with us on social media:</p>
+        <div class="social-links">
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/facebook-icon.png')}}" alt="Facebook">
+                Facebook
+            </a>
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/twitter-icon.png')}}" alt="Twitter">
+                Twitter
+            </a>
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/linkedin-icon.png')}}" alt="LinkedIn">
+                LinkedIn
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Image Rotation Script
+    const backgroundImages = [
+        "{{ url_for('static', filename='images/landingpagebackgroundimage.jpg') }}"
+    ];
+
+    const adImages = [
+        "{{ url_for('static', filename='images/image1.jpeg') }}",
+        "{{ url_for('static', filename='images/image2.jpg') }}",
+        "{{ url_for('static', filename='images/image3.png') }}",
+        "{{ url_for('static', filename='images/image4.jpeg') }}"
+    ];
+
+    let currentBackgroundIndex = 0;
+    let currentAdIndex = 0;
+
+    function rotateImages() {
+        const body = document.body;
+
+        // Set background image
+        body.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+
+        // Display random ad image
+        const adContainer = document.querySelector('.ad-images');
+        adContainer.innerHTML = `<img src="${adImages[currentAdIndex]}" alt="Ad Image">`;
+
+        // Update indices for the next rotation
+        currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+        currentAdIndex = Math.floor(Math.random() * adImages.length);
+    }
+
+    setInterval(rotateImages, 10000); // Rotate images every 10 seconds
+</script>
+
+</body>
+</html>

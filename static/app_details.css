@@ -1,0 +1,136 @@
+/* app_details.css */
+
+/* Add a global reset to remove default margin and padding */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("../static/images/app_detailsimage.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.one {
+    display: flex;
+}
+
+.one .two {
+    width: 225px;
+    height: 100%;
+    background: #009933;
+    padding: 30px 0;
+    position: fixed;
+    transition: width 0.3s ease; 
+}
+
+.one .two h1 {
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.one .two h2 {
+    color: #fff;
+    text-align: center;
+}
+
+.one .two .active {
+    background: #0a8032;
+}
+
+.one .two ul {
+    padding: 0;
+}
+
+.one .two ul li {
+    text-align: center;
+    padding: 15px;
+    border-bottom: 0.4px solid white;
+    border-top: 0.4px solid white;
+    transition: background 0.3s ease; 
+    font-weight: bold;
+}
+
+.one .two ul li a {
+    color: #ffffff;
+    display: block;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.one .two ul li:hover {
+    background: #033e3e; 
+}
+
+.one .two ul li:hover a {
+    color: #ffffff; /* Change text color on hover */
+}
+
+.one .two ul li a .side {
+    width: 25px;
+    align: center;
+}
+
+.one .content {
+    width: 100%;
+    margin-left: 200px;
+}
+
+.one .content .topbar {
+    text-align: center;
+    padding: 20px;
+    background: #00b33c;
+    color: white;
+}
+
+.one .content .contentbar {
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.one .content .contentbar h1 {
+    color: #151b54;
+    text-align: center;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.contentbar .border {
+    border: 5px solid #11a844;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.contentbar table {
+    width: 100%;
+}
+
+.contentbar table tr {
+    border-bottom: 1px solid #11a844;
+}
+
+.contentbar table td {
+    padding: 10px;
+}
+
+.worddark {
+    color: #151b54;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.wordlight {
+    color: #FFFFFF;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+

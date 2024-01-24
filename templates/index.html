@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GDiSEP Digital Skills</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <style>
+        body {
+            background-image: url("../static/images/indeximage.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>GDiSEP Digital Skills</h1>
+            </div>
+            <div class="sidebar-items">
+                <ul>
+                    <li class="active"><a href="{{url_for('index')}}">Index</a></li>
+                    <li><a href="{{url_for('display')}}">Display</a></li>
+                    <li><a href="{{url_for('update')}}">Update</a></li>
+                    <li><a href="{{url_for('application_details')}}">Your Application Details</a></li>
+                    <li><a href="{{url_for('logout')}}">Log out</a></li>
+                </ul>
+            </div>
+            <div class="social-links">
+                <a href="#" target="_blank"><img src="{{url_for('static', filename='images/facebook-icon.png')}}" alt="Facebook"></a>
+                <a href="#" target="_blank"><img src="{{url_for('static', filename='images/twitter-icon.png')}}" alt="Twitter"></a>
+                <a href="#" target="_blank"><img src="{{url_for('static', filename='images/linkedin-icon.png')}}" alt="LinkedIn"></a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="topbar">
+                <h2>Welcome to Godfrey's DiSEP Digital Skills Application!</h2>
+                <p>Unlock your potential in the digital world.</p>
+                <a class="apply-button" href="{% if not existing_application %}{{ url_for('application') }}{% else %}{{ url_for('application_details') }}{% endif %}">
+                    {% if not existing_application %}Apply Now{% else %}View Your Application{% endif %}
+                </a>
+            </div>
+
+            <div class="contentbar">
+                <div class="msg">{{ msg }}</div>
+                <!-- Additional features or content can be added here -->
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
+
+

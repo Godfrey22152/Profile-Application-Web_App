@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godfrey's Digital Skill Empowerment Programme (GDiSEP)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+
+<!-- Website Description Section -->
+<div class="container">
+    <div class="description-container">
+        <header>
+            <h1>Welcome to Godfrey's Digital Skill Empowerment Programme (GDiSEP)</h1>
+        </header>
+        <div class="description-content">
+            <p>
+                An initiative that will provide excellent digital training and upskilling to a group of eligible candidates with digital skills to build their capabilities and broaden their digital scope. The Digital Skills Empowerment Programme (GDiSEP) is designed to aid the identification and attraction of unique digitally savvy candidates, train, develop, and position them to be able to participate in supporting the digital transformation journey of the Godfrey foundation and also help bridge the gap of digital talent scarcity in the employment market. It is an intensive program and a unique opportunity for young people who are resourceful and passionate about developing the required skills to build a fast-tracked career.
+            </p>
+            <p>
+                GDiSEP is an intensive program and a unique opportunity for young people who are resourceful and passionate to develop the required skills to build a fast-tracked career. Successful candidates will have the opportunity to prepare for and complete professional certifications.
+            </p>
+        </div>
+        <a href="{{ url_for('register') }}" class="apply-button">APPLY NOW</a>
+    </div>
+</div>
+
+<!-- Ads Section -->
+<div class="container">
+    <div class="ads-container">
+        <h2>Featured Ads</h2>
+        <div class="ad-images">
+            <!-- Ads images will be dynamically updated here -->
+        </div>
+    </div>
+</div>
+
+<!-- Disclaimer Section -->
+<div class="container">
+    <div class="disclaimer-container">
+        <h2>Disclaimer</h2>
+        <div class="disclaimer-content">
+            <p>This website is solely for learning purposes only and does not emanate from Stanbic Bank PLC or Standard Bank Group</p>
+            <p>Also Godfrey's Foundation does not exist, and NO recruitment is being done, as pointed out earlier, THIS IS FOR LEARNING PURPOSE</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Us Section -->
+<div class="container">
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>Connect with us on social media:</p>
+        <div class="social-links">
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/facebook-icon.png')}}" alt="Facebook">
+                Facebook
+            </a>
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/twitter-icon.png')}}" alt="Twitter">
+                Twitter
+            </a>
+            <a href="#" target="_blank" class="social-link">
+                <img src="{{url_for('static', filename='images/linkedin-icon.png')}}" alt="LinkedIn">
+                LinkedIn
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Image Rotation Script
+    const backgroundImages = [
+        "{{ url_for('static', filename='images/landingpagebackgroundimage.jpg') }}"
+    ];
+
+    const adImages = [
+        "{{ url_for('static', filename='images/image1.jpeg') }}",
+        "{{ url_for('static', filename='images/image2.jpg') }}",
+        "{{ url_for('static', filename='images/image3.jpg') }}",
+        "{{ url_for('static', filename='images/image4.jpg') }}",
+        "{{ url_for('static', filename='images/image5.jpg') }}",
+        "{{ url_for('static', filename='images/image6.jpg') }}",
+        "{{ url_for('static', filename='images/image7.jpg') }}",
+        "{{ url_for('static', filename='images/image8.png') }}",
+        "{{ url_for('static', filename='images/image9.png') }}",
+        "{{ url_for('static', filename='images/image10.jpg') }}",
+        "{{ url_for('static', filename='images/image11.jpg') }}",
+        "{{ url_for('static', filename='images/image12.jpg') }}",
+        "{{ url_for('static', filename='images/image13.jpg') }}",
+        "{{ url_for('static', filename='images/image14.png') }}",
+        "{{ url_for('static', filename='images/image15.jpeg') }}",
+        "{{ url_for('static', filename='images/image16.jpeg') }}",
+        "{{ url_for('static', filename='images/image17.jpg') }}"
+ 
+    ];
+
+    const adCaptions = [
+        "Discover the latest trends",
+        "Upgrade your skills today",
+        "Explore new opportunities",
+        "Unlock your potential",
+        "Unleash Your Creativity with Cutting-Edge Courses!",
+        "Elevate Your Skills - A Pathway to Success",
+        "Digital Mastery Starts Here - Join Today!",
+        "Transform Your Future: Learn, Apply, Succeed",
+        "Innovation Awaits! Explore New Horizons",
+        "Skills That Shine: Your Gateway to Opportunities",
+        "Discover the Power of Digital Expertise",
+        "Unlock Your Potential with GDiSEP",
+        "Stay Ahead in the Digital Revolution",
+        "Empower Yourself: Dive into Digital Excellence",
+        "Chart Your Course to a Digital Career",
+        "Seize the Moment: Learn, Grow, Thrive",
+        "Ignite Your Passion for Digital Proficiency"
+    ];
+
+    let currentBackgroundIndex = 0;
+    let currentAdIndex = 0;
+
+    function rotateImages() {
+        const body = document.body;
+
+        // Set background image
+        body.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`;
+
+        // Display random ad image with caption
+        const adContainer = document.querySelector('.ad-images');
+        adContainer.innerHTML = `
+            <div class="ad-image">
+                <img src="${adImages[currentAdIndex]}" alt="Ad Image">
+                <p class="ad-caption">${adCaptions[currentAdIndex]}</p>
+            </div>
+        `;
+
+        // Update indices for the next rotation
+        currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+        currentAdIndex = Math.floor(Math.random() * adImages.length);
+    }
+
+    setInterval(rotateImages, 5000); // Rotate images every 5 seconds
+</script>
+
+</body>
+</html>
