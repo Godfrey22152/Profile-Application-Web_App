@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile_mongo
+    container_name: my_mongodb
+    ports:
+      - "27017:27017"
+
+  flaskapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my_flaskapp
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb

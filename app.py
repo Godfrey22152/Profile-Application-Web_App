@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 
 # MongoDB configuration
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://my_mongodb:27017/')
 db = client['ProfileApp']
 
 

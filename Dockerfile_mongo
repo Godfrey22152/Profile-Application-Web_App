@@ -1,0 +1,4 @@
+FROM mongo
+
+# Expose the default MongoDB port
+EXPOSE 27017
