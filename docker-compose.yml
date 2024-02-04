@@ -1,19 +1,15 @@
 version: '3'
 services:
-  mongodb:
-    build:
-      context: .
-      dockerfile: Dockerfile_mongo
-    container_name: my_mongodb
+  my_mongodb:
+    image: mongo:4.4  # Specify MongoDB version 4.4
     ports:
       - "27018:27017"
 
-  flaskapp:
+  my_flaskapp:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: my_flaskapp
     ports:
       - "5000:5000"
     depends_on:
-      - mongodb
+      - my_mongodb
