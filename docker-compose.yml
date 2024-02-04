@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile_mongo
     container_name: my_mongodb
     ports:
-      - "27017:27017"
+      - "27018:27017"
 
   flaskapp:
     build:
