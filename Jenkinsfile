@@ -32,13 +32,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            // Clean up (optional)
-            script {
-                sh 'docker-compose down'
-            }
-        }
-    }
 }
