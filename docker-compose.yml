@@ -1,7 +1,7 @@
 version: '3'
 services:
   my_mongodb:
-    image: mongo:4.4  # Specify MongoDB version 4.4
+    image: mongo:4.4.27  # Specify MongoDB version 4.4.27
     ports:
       - "27018:27017"
 
