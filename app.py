@@ -9,8 +9,9 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 
 # MongoDB configuration
-client = MongoClient('mongodb://my_mongodb:27017/')
+client = MongoClient('mongodb://mongo:27017/')
 db = client['ProfileApp']
+
 
 
 @app.route('/')
@@ -28,7 +29,7 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        
+
         account = db.accounts.find_one({'username': username, 'password': password})
 
         if account:
@@ -56,7 +57,8 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 
+'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
@@ -114,7 +116,8 @@ def display():
 def update():
     msg = ''
     if 'loggedin' in session:
-        if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
+        if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form 
+and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
             username = request.form['username']
             password = request.form['password']
             email = request.form['email']
@@ -202,6 +205,5 @@ def application_details():
         application = db.application.find_one({'user_id': ObjectId(session['id'])})
         return render_template('app_details.html', application=application)
 
-
 if __name__ == "__main__":
-    app.run(host="localhost", port=int("5000"))
+    app.run(host="0.0.0.0", port=5000)
