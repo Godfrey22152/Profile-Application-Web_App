@@ -1,4 +1,11 @@
-FROM mongo
+# Use the official MongoDB image
+FROM mongo:4.4-focal
 
-# Expose the default MongoDB port
+# Expose MongoDB port
 EXPOSE 27017
+
+# Define environment variable for MongoDB database
+ENV MONGO_INITDB_DATABASE=ProfileApp
+
+# Copy initialization script into the container   
+COPY init.js /docker-entrypoint-initdb.d/
