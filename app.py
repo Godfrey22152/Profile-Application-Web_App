@@ -57,8 +57,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 
-'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
@@ -116,8 +115,7 @@ def display():
 def update():
     msg = ''
     if 'loggedin' in session:
-        if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form 
-and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
+        if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form and 'address' in request.form and 'city' in request.form and 'country' in request.form and 'postalcode' in request.form and 'organisation' in request.form:
             username = request.form['username']
             password = request.form['password']
             email = request.form['email']
@@ -128,7 +126,7 @@ and 'address' in request.form and 'city' in request.form and 'country' in reques
             country = request.form['country']
             postalcode = request.form['postalcode']
 
-            existing_account = db.accounts.find_one({'username': username, '_id': {'$ne': ObjectId(session['id'])}})
+            existing_account = db.accounts.find_one({'username': username, '_id': {'$ne': ObjectId(session['id'])}}) 
 
             if existing_account:
                 msg = 'Account already exists!'
