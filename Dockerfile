@@ -1,18 +1,19 @@
 # Use an official Python runtime as a parent image
-FROM python:latest
+FROM python:3.11.9-alpine3.19
 
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install any needed packages specified in requirements.txt
-COPY requirements.txt requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# Copy the application code into the container at /app
+COPY app.py /app/app.py
+COPY static /app/static
+COPY templates /app/templates
 
 
-# Make port 5000 available to the world outside this container
+# Install Flask and any other required packages
+RUN pip install flask pymongo
+
+# Make port 5000 available to the world outside this container    
 EXPOSE 5000
 
 # Define environment variable
