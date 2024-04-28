@@ -49,7 +49,7 @@ pip install Flask pymongo
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/ProfileApp.git
+   git clone https://github.com/Godfrey22152/Profile-Application-Web_App.git
    ```
 
 2. Navigate to the project directory:
