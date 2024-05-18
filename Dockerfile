@@ -1,17 +1,23 @@
-# Use the official MongoDB image as the base image
-FROM mongo
+# Use an official Python runtime as a parent image
+FROM python:3.11.9-alpine3.19
 
-# Install MongoDB shell
-RUN apt-get update && apt-get install -y wget gnupg && \
-    wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add - && \
-    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list && \
-    apt-get update && apt-get install -y mongodb-org-shell
+# Set the working directory to /app
+WORKDIR /app
 
-# Copy the initialization script into the container
-COPY init.js /docker-entrypoint-initdb.d/
+# Copy the application code into the container at /app
+COPY app.py /app/app.py
+COPY static /app/static
+COPY templates /app/templates
 
-# Define environment variable for MongoDB database
-ENV MONGO_INITDB_DATABASE=ProfileApp
+# Copy and install dependencies
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Expose MongoDB port
-EXPOSE 27017
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
