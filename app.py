@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
 import re
 import os
 import random
@@ -9,10 +10,9 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 
 # MongoDB configuration
-client = MongoClient('mongodb://mongo:27017/')
+mongo_uri = os.environ.get('DB_URL', 'mongodb://localhost:27017/')
+client = MongoClient(mongo_uri)
 db = client['ProfileApp']
-
-
 
 @app.route('/')
 @app.route('/landing')
