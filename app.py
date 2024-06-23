@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import re
@@ -9,10 +9,29 @@ import random
 app = Flask(__name__)
 app.secret_key = 'your secret key'
 
-# MongoDB configuration
-mongo_uri = os.environ.get('DB_URL', 'mongodb://localhost:27017/')
+# Load environment variables
+load_dotenv()
+mongo_uri = os.environ.get('DB_URL', 'mongodb://mongo-profilewebapp-0.mongo-profilewebapp:27017,mongo-profilewebapp-1.mongo-profilewebapp:27017,mongo-profilewebapp-2.mongo-profilewebapp:27017/')
+
+# Connect to MongoDB database
 client = MongoClient(mongo_uri)
+client.server_info()  # Force connection on a request.
+print("Connected to MongoDB successfully!")
+
+# Access the "ProfileApp" database
 db = client['ProfileApp']
+
+@app.route('/healthz')
+def healthz():
+    return 'OK', 200
+
+@app.route('/ready')
+def ready():
+    try:
+        client.server_info()  # Force connection on a request.
+        return 'READY', 200
+    except errors.ServerSelectionTimeoutError:
+        return 'NOT READY', 500
 
 @app.route('/')
 @app.route('/landing')
@@ -126,7 +145,7 @@ def update():
             country = request.form['country']
             postalcode = request.form['postalcode']
 
-            existing_account = db.accounts.find_one({'username': username, '_id': {'$ne': ObjectId(session['id'])}}) 
+            existing_account = db.accounts.find_one({'username': username, '_id': {'$ne': ObjectId(session['id'])}})
 
             if existing_account:
                 msg = 'Account already exists!'
