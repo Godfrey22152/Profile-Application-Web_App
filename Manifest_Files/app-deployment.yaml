@@ -35,8 +35,8 @@ spec:
           httpGet:
             path: /ready
             port: 5000
-          initialDelaySeconds: 60
-          periodSeconds: 120
+          initialDelaySeconds: 5
+          periodSeconds: 10
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 2
@@ -44,8 +44,8 @@ spec:
           httpGet:
             path: /healthz
             port: 5000
-          initialDelaySeconds: 10
-          periodSeconds: 120
+          initialDelaySeconds: 5
+          periodSeconds: 300
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 3
@@ -53,8 +53,8 @@ spec:
           httpGet:
             path: /ready
             port: 5000
-          initialDelaySeconds: 10
-          periodSeconds: 120
+          initialDelaySeconds: 5
+          periodSeconds: 300
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 3
