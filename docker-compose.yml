@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile_mongo
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     restart: always
@@ -32,8 +32,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_BASICAUTH_USERNAME: odo
-      ME_CONFIG_BASICAUTH_PASSWORD: odo
+      ME_CONFIG_BASICAUTH_USERNAME: b2Rv
+      ME_CONFIG_BASICAUTH_PASSWORD: b2Rv
 
 volumes:
   mongodb_data:
