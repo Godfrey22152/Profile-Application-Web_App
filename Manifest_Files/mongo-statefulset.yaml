@@ -72,15 +72,15 @@ spec:
             - -c
             - mongo --eval "db.adminCommand('ping')"
           initialDelaySeconds: 5
-          periodSeconds: 10
+          periodSeconds: 300
         livenessProbe:
           exec:
             command:
             - /bin/sh
             - -c
             - mongo --eval "db.adminCommand('ping')"
-          initialDelaySeconds: 30
-          periodSeconds: 30
+          initialDelaySeconds: 5
+          periodSeconds: 300
         args:
         - --config=/etc/mongo/mongodb.conf
       volumes:
