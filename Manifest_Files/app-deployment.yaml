@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  mongo-url: mongo-svc
+  mongo-url: mongo-profilewebapp
 
 ---
 apiVersion: apps/v1
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: godfrey22152/profile-creation-webapp:latest
+        image: godfrey22152/profile-creation-webapp:2.0
         ports:
         - containerPort: 5000
         env:
@@ -31,7 +31,33 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
-
+        startupProbe:
+          httpGet:
+            path: /ready
+            port: 5000
+          initialDelaySeconds: 60
+          periodSeconds: 120
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 120
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 120
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
 
 ---
 apiVersion: v1
