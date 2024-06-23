@@ -13,7 +13,7 @@ kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  mongo-url: mongo-svc
+  mongo-url: mongo-profilewebapp
 
 ---
 apiVersion: apps/v1
@@ -53,6 +53,7 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: mongo-url
+
 ---
 apiVersion: v1
 kind: Service
