@@ -1,0 +1,173 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-config
+data:
+  mongodb.conf: |
+    storage:
+      dbPath: /data/db
+    replication:
+      replSetName: "rs0"
+immutable: true
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard
+provisioner: k8s.io/minikube-hostpath
+volumeBindingMode: Immediate
+reclaimPolicy: Delete
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-profilewebapp
+  labels:
+    app: mongo-profilewebapp
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    app: mongo-profilewebapp
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-profilewebapp
+  labels:
+    app: mongo-profilewebapp
+spec:
+  serviceName: "mongo-profilewebapp"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo-profilewebapp
+  template:
+    metadata:
+      labels:
+        app: mongo-profilewebapp
+    spec:
+      containers:
+      - name: mongo
+        image: godfrey22152/mongo-profilewebapp:5.0
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
+        - name: mongodb-config
+          mountPath: /etc/mongo
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: "ProfileApp"
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - mongo --eval "db.adminCommand('ping')"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - mongo --eval "db.adminCommand('ping')"
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        args:
+        - --config=/etc/mongo/mongodb.conf
+      volumes:
+        - name: mongodb-config
+          configMap:
+            name: mongodb-config
+            items:
+              - key: mongodb.conf
+                path: mongodb.conf
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-replicaset-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-init
+        image: godfrey22152/mongo-profilewebapp:5.0
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            # Wait for all MongoDB pods to be ready
+            max_attempts=60
+            attempt=0
+
+            until mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "print(\"waiting for mongo-profilewebapp-0 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-0.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            attempt=0
+            until mongo --host mongo-profilewebapp-1.mongo-profilewebapp --eval "print(\"waiting for mongo-profilewebapp-1 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-1.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            attempt=0
+            until mongo --host mongo-profilewebapp-2.mongo-profilewebapp --eval "print(\"waiting for  mongo-profilewebapp-2 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-2.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            # Initialize the replica set if not already initialized
+            rs_status=$(mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "rs.status()" --quiet)
+            if echo "$rs_status" | grep -q '"ok" : 0'; then
+              echo "Replica set is not initialized. Initializing now..."
+              mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval '
+                rs.initiate({
+                  _id: "rs0",
+                  members: [
+                    { _id: 0, host: "mongo-profilewebapp-0.mongo-profilewebapp:27017" },
+                    { _id: 1, host: "mongo-profilewebapp-1.mongo-profilewebapp:27017" },
+                    { _id: 2, host: "mongo-profilewebapp-2.mongo-profilewebapp:27017" }
+                  ]
+                });
+              ' --quiet
+            else
+              echo "Replica set already initialized"
+            fi
+
+            # Wait for the primary node to be elected
+            attempt=0
+            until mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "db.isMaster().ismaster" --quiet | grep -q "true" || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for primary node, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            # Initialize the database and collections if they don't already exist
+            mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "
+              db = db.getSiblingDB('ProfileApp');
+              db.createCollection('accounts');
+              db.createCollection('application');
+            "
+      restartPolicy: OnFailure
