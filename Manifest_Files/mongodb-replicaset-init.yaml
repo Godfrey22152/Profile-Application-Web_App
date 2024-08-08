@@ -1,0 +1,71 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-replicaset-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo-init
+        image: godfrey22152/mongo-profilewebapp:5.0
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            # Wait for all MongoDB pods to be ready
+            max_attempts=60
+            attempt=0
+
+            until mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "print(\"waiting for mongo-profilewebapp-0 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-0.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            attempt=0
+            until mongo --host mongo-profilewebapp-1.mongo-profilewebapp --eval "print(\"waiting for mongo-profilewebapp-1 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-1.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            attempt=0
+            until mongo --host mongo-profilewebapp-2.mongo-profilewebapp --eval "print(\"waiting for  mongo-profilewebapp-2 connection\")" --quiet || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for mongo-profilewebapp-2.mongo-profilewebapp, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            # Initialize the replica set if not already initialized
+            rs_status=$(mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "rs.status()" --quiet)
+            if echo "$rs_status" | grep -q '"ok" : 0'; then
+              echo "Replica set is not initialized. Initializing now..."
+              mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval '
+                rs.initiate({
+                  _id: "rs0",
+                  members: [
+                    { _id: 0, host: "mongo-profilewebapp-0.mongo-profilewebapp:27017" },
+                    { _id: 1, host: "mongo-profilewebapp-1.mongo-profilewebapp:27017" },
+                    { _id: 2, host: "mongo-profilewebapp-2.mongo-profilewebapp:27017" }
+                  ]
+                });
+              ' --quiet
+            else
+              echo "Replica set already initialized"
+            fi
+
+            # Wait for the primary node to be elected
+            attempt=0
+            until mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "db.isMaster().ismaster" --quiet | grep -q "true" || [ $attempt -eq $max_attempts ]; do
+              attempt=$((attempt + 1))
+              echo "Waiting for primary node, attempt $attempt/$max_attempts..."
+              sleep 10
+            done
+
+            # Initialize the database and collections if they don't already exist
+            mongo --host mongo-profilewebapp-0.mongo-profilewebapp --eval "
+              db = db.getSiblingDB('ProfileApp');
+              db.createCollection('accounts');
+              db.createCollection('application');
+            "
+      restartPolicy: OnFailure
